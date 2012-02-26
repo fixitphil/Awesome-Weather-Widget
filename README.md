@@ -1,12 +1,13 @@
 Other Github Links
-============================================================================================================
+==================
 [Awesome New Tab Page](https://github.com/michaelhart/Awesome-New-Tab-Page)
 
 [Awesome Weather Widget](https://github.com/michaelhart/Awesome-Weather-Widget)
 
+[NTP-Shell-Widget](https://github.com/michaelhart/NTP-Widget-Shell) (primarily a documented example)
 
-Chrome Web Store Downloads
-==========================
+Chrome Web Store
+================
 [Awesome New Tab Page](https://chrome.google.com/webstore/detail/mgmiemnjjchgkmgbeljfocdjjnpjnmcg)
 
 [Awesome Weather Widget](https://chrome.google.com/webstore/detail/goeepbfnllchoihkoiecpkkekbpfiboc)
