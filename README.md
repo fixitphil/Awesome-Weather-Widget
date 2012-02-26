@@ -1,12 +1,14 @@
 Other Github Links
 ============================================================================================================
 [Awesome New Tab Page](https://github.com/michaelhart/Awesome-New-Tab-Page)
+
 [Awesome Weather Widget](https://github.com/michaelhart/Awesome-Weather-Widget)
 
 
 Chrome Web Store Downloads
 ==========================
 [Awesome New Tab Page](https://chrome.google.com/webstore/detail/mgmiemnjjchgkmgbeljfocdjjnpjnmcg)
+
 [Awesome Weather Widget](https://chrome.google.com/webstore/detail/goeepbfnllchoihkoiecpkkekbpfiboc)
 
 If you're not into javascript and git, you will probably want to use the above link to download a recent version from the Chrome Web Store.
@@ -15,6 +17,10 @@ What is this?
 -------------
 This is the Awesome Weather Widget published on the Chrome Web Store. It's currently the most popular widget for Awesome New Tab Page,
 with over 10,000 users.
+
+What license is this extension released under?
+----------------------------------------------
+__[GNU General Public License version 3](https://www.gnu.org/licenses/gpl-3.0.txt)__
 
 Who can contribute?
 -------------------
@@ -26,8 +32,8 @@ Want to help ensure Awesome New Tab Page works great in your native language? He
 
 Do widgets need to be licensed under GPL v3+?
 ---------------------------------------------
-I'm not a lawyer (and of course can not provide legal advice, so take this with a grain of salt), but I do not believe widgets _need_ to be as they are separate "programs" (packaged and installed separately). However, I do recommend that all widgets be GPL v3+ licensed. However, in simplest terms: __no__.
+I'm not a lawyer, so take this with a grain of salt:
 
-This is, of course, unless you include something GPL licensed in your code (jQuery here being excluded, as it is [dual licensed MIT and GPL](http://jquery.org/license/)).
+If your widgets are built from this widget, then it must be GPL v3 licensed. If you make a widget from the (shell widget)[https://github.com/michaelhart/NTP-Widget-Shell] or your own custom code, then it doesn't need to be GPL v3 licensed.
 
 For more information, please see the [GPL FAQ](http://www.gnu.org/licenses/gpl-faq.html).
