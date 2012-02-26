@@ -1,0 +1,12 @@
+{
+  "update_url": "http://clients2.google.com/service/update2/crx",
+  "background_page": "background.html",
+  "version": "2012.102.125.100",
+  "name": "Awesome Weather Widget [aNTP]",
+  "description": "Awesome weather widget for Awesome New Tab Page. [Android Themed] [aNTP]",
+  "options_page": "options.html",
+  "icons": {
+    "128": "icon.png"
+  },
+  "permissions": [ "https://www.google.com/" ]
+}

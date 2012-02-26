@@ -1,0 +1,43 @@
+<!--
+   - For https://chrome.google.com/webstore/detail/mgmiemnjjchgkmgbeljfocdjjnpjnmcg
+   -->
+
+<!-- <script type="text/javascript" src="jquery.js"></script> -->
+<script type="text/javascript" src="xml2array.js"></script>
+<script type="text/javascript">
+var info = {
+  poke:   1, // poke version 1
+  width:  2, // 406 px max
+  height: 1, // 200 px max
+  path:   "widget.html",
+};
+
+chrome.extension.onRequestExternal.addListener(function(request, sender, sendResponse) {
+  if(request === "mgmiemnjjchgkmgbeljfocdjjnpjnmcg-poke") {
+
+    chrome.extension.sendRequest(
+      sender.id,
+      {
+        head: "mgmiemnjjchgkmgbeljfocdjjnpjnmcg-pokeback",
+        body: info,
+      }
+    );
+  }
+});
+
+function update() {
+  var place = localStorage.getItem("place") || "San Francisco, CA";
+  var hl = localStorage.getItem("hl") || "en";
+
+  var url = "https://www.google.com/ig/api?weather=" + place + "&hl=" + hl;
+  var xml = new JKL.ParseXML( url );
+  var data = xml.parse();
+
+  localStorage.setItem("weather", JSON.stringify( data ));
+}
+
+setInterval(update, 10*60*1000);
+update();
+
+
+</script>
