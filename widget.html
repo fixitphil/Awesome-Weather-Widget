@@ -356,6 +356,7 @@
 
 
       $(document).ready(function($) {
+        $('img').live('dragstart', function(event) { event.preventDefault(); });
         setInterval(reset, 2.5*60*1000);
         reset();
       });
