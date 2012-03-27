@@ -6,17 +6,17 @@
     <script type="text/javascript" src="jquery.jgrowl.js"></script>
     <link href="jquery.jgrowl.css" media="screen" rel="stylesheet" type="text/css" />
     <style type="text/css">
-      #flattr {
+      #buttons {
         text-align: center;
         position: absolute;
-        top: 122px;
+        top: 15px;
         left: 22px;
         width: 70px;
       }
 
-      body { padding:100px 100px; font:13px/150% Verdana, Tahoma, sans-serif; }
+      body { font:13px/150% Verdana, Tahoma, sans-serif; }
 
-      input, textarea, select { 
+      input, textarea, select {
         padding: 9px;
         border: solid 1px #E5E5E5;
         outline: 0;
@@ -32,7 +32,7 @@
         width: 220px;
       }
 
-      textarea { 
+      textarea {
         width: 400px;
         max-width: 400px;
         height: 150px;
@@ -40,18 +40,24 @@
         }
 
       input:hover, textarea:hover,
-      input:focus, textarea:focus { 
-        border-color: #C9C9C9; 
+      input:focus, textarea:focus {
+        border-color: #C9C9C9;
         -webkit-box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 8px;
-        }
-
-      .form label { 
-        margin-left: 10px; 
-        color: #999; 
-        }
-      .form label:hover { 
-        color: #777; 
-        }
+      }
+      #plus {
+        padding-left: 100px;
+      }
+      form {
+        padding-top: 0px;
+        padding-left: 100px;
+      }
+      .form label {
+        margin-left: 10px;
+        color: #999;
+      }
+      .form label:hover {
+        color: #777;
+      }
 
       .submit input {
         width: auto;
@@ -63,7 +69,12 @@
         -moz-border-radius: 5px;
         -webkit-border-radius: 5px;
         cursor: pointer;
-        }
+      }
+      hr {
+        height: 0;
+        border: 0;
+        border-bottom: 1px solid rgba(0, 0, 0, .5);
+      }
     </style>
 
   </head>
@@ -180,13 +191,23 @@
       <p class="hl">
         <input type="button" onclick="reset()" value="Reset">
         <input id="as" type="button" onclick="save()" value="Apply &amp; Save">
+        <input id="antp" type="button" onclick="go2antp()" value="Back to ANTP">
       </p>
 
     </form>
 
-    <div id="flattr">
-      <p>Donate Flattr</p>
+    <div id="plus">
+      <g:plus href="https://plus.google.com/101062285048075360930" rel="publisher" width="300" height="131" theme="light"></g:plus>
+    </div>
+
+    <div id="buttons">
       <a class="FlattrButton" style="display:none;" href="https://github.com/michaelhart/Awesome-Weather-Widget"></a>
+      <hr />
+      +1 ANTP
+      <g:plusone size="tall" href="https://chrome.google.com/webstore/detail/mgmiemnjjchgkmgbeljfocdjjnpjnmcg"></g:plusone>
+      <hr />
+      +1 This Widget
+      <g:plusone size="tall" href="https://chrome.google.com/webstore/detail/goeepbfnllchoihkoiecpkkekbpfiboc"></g:plusone>
     </div>
 
     <script>
@@ -196,6 +217,12 @@
         s.async = true;
         s.src = 'http://api.flattr.com/js/0.6/load.js?mode=auto';
         t.parentNode.insertBefore(s, t);
+    })();
+
+    (function() {
+      var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+      po.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
     })();
 
     var bp = chrome.extension.getBackgroundPage();
@@ -215,7 +242,11 @@
 
       bp.update();
 
-      $.jGrowl("You're awesome.", {header: "Saved!!1!", position: "top-left"});
+      $.jGrowl("You're awesome.", {header: "Saved!!1!", position: "top-right"});
+    }
+
+    function go2antp() {
+      window.location = "chrome-extension://mgmiemnjjchgkmgbeljfocdjjnpjnmcg/ntp.html";
     }
 
     </script>
