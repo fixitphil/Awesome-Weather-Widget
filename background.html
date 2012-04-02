@@ -5,6 +5,8 @@
 <!-- <script type="text/javascript" src="jquery.js"></script> -->
 <script type="text/javascript" src="xml2array.js"></script>
 <script type="text/javascript">
+// Learn more about poke v2 here:
+// https://github.com/michaelhart/Awesome-New-Tab-Page/wiki/Poke-v2
 var info = {
   "poke"    :   2,              // poke version 2
   "width"   :   2,              // 406 px default
@@ -21,7 +23,6 @@ var info = {
 
 chrome.extension.onRequestExternal.addListener(function(request, sender, sendResponse) {
   if(request === "mgmiemnjjchgkmgbeljfocdjjnpjnmcg-poke") {
-
     chrome.extension.sendRequest(
       sender.id,
       {
