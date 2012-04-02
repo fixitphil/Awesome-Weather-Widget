@@ -6,10 +6,17 @@
 <script type="text/javascript" src="xml2array.js"></script>
 <script type="text/javascript">
 var info = {
-  poke:   1, // poke version 1
-  width:  2, // 406 px max
-  height: 1, // 200 px max
-  path:   "widget.html",
+  "poke"    :   2,              // poke version 2
+  "width"   :   2,              // 406 px default
+  "height"  :   1,              // 200 px default
+  "path"    :   "widget.html",
+  "v2"      :   {
+                  "resize"    :   true,  // Set to true ONLY if you create a range below.
+                  "min_width" :   1,
+                  "max_width" :   2,
+                  "min_height":   1,
+                  "max_height":   1
+                }
 };
 
 chrome.extension.onRequestExternal.addListener(function(request, sender, sendResponse) {
@@ -36,7 +43,7 @@ function update() {
   localStorage.setItem("weather", JSON.stringify( data ));
 }
 
-setInterval(update, 10*60*1000);
+setInterval(update, 15*60*1000);
 update();
 
 

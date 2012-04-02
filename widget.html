@@ -85,7 +85,7 @@
         -webkit-border-radius:10px;
         -webkit-box-shadow: 0px 7px 7px -5px #111;
         border-bottom:1px inset #444;
-        
+
         -webkit-animation-name: fall;
         -webkit-animation-duration: 0.5s;
         -webkit-animation-iteration-count: 1;
@@ -197,7 +197,7 @@
       );
 
         z-index: -1;
-        
+
         display: block;
         position: absolute;
         top: 0; bottom: 0;
@@ -223,7 +223,6 @@
           return Math.round(n);
         }
       }
-
 
       var weather, place;
       var google = "https://www.google.com";
@@ -356,8 +355,36 @@
       };
 
 
+      function restyle() {
+        var width  = $(window).width() ,
+            height = $(window).height();
+
+        if ( width < 406 ) {
+          $(".sub").css("display", "none");
+          $(".main").css({
+            "margin-left": (185 - 77) / 2
+          });
+          $(".weather-widget").css({
+            "height": "185px",
+            "width" : "185px"
+          })
+        } else if ( width >= 406 ) {
+          $(".sub").css("display", "block");
+          $(".main").css("margin-left", "");
+          $(".weather-widget").css({
+            "height": "",
+            "width" : ""
+          })
+        }
+
+      }
 
       $(document).ready(function($) {
+        restyle();
+        $(window).bind("resize", function() {
+          restyle();
+        });
+
         $('img').live('dragstart', function(event) { event.preventDefault(); });
         setInterval(reset, 2.5*60*1000);
         reset();
@@ -369,7 +396,7 @@
     <div class="non-android-style"></div>
     <div class="widgets">
       <div class="weather-widget">
-        <div class="box-left">
+        <div class="box-left main">
           <h1><span class="now">--</span>&deg;</h1>
           <div class="place">--</div>
           <div class="conditions-0">--</div>
@@ -383,7 +410,7 @@
           <div class="cond conditions-1">--</div>
           <div class="hi"><span class="high-1">--</span>&deg;</div>
           <div class="lo"><span class="low-1">--</span>&deg;</div>
-        </div>      
+        </div>
         <div class="box-left sub">
           <div class="image">
             <img class="img-2" src="spacer.png" height="40" width="40">
