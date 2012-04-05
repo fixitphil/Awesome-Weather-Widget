@@ -3,7 +3,8 @@
   <head>
     <script type="text/javascript" src="jquery.js"></script>
     <script type="text/javascript">
-      style = localStorage.getItem("style") || "A";
+      // Duplicity for the style to apply quickly & be live
+      var style = localStorage.getItem("style") || "A";
       if(style === "M") {
         $("html").addClass("non-android");
       }
@@ -224,15 +225,20 @@
         }
       }
 
-      var weather, place;
       var google = "https://www.google.com";
-      var unit;
-      var current_unit;
 
       function reset() {
-        weather = JSON.parse(localStorage.getItem("weather"));
-        place = localStorage.getItem("place") || "San Francisco, CA";
-        unit = localStorage.getItem("unit") || "F";
+        var weather = JSON.parse(localStorage.getItem("weather"));
+        var place = localStorage.getItem("place") || "San Francisco, CA";
+        var unit = localStorage.getItem("unit") || "F";
+
+        // Duplicity for the style to apply quickly & be live
+        style = localStorage.getItem("style") || "A";
+        if(style === "M") {
+          $("html").addClass("non-android");
+        } else {
+          $("html").removeClass("non-android");
+        }
 
         if(unit === "C") {
           unit = "C";
@@ -241,7 +247,7 @@
         }
 
         if(!weather.xml_api_reply) {
-          console.log("Weather Widget Issue: " + 1);
+          console.error("No weather data.");
         }
 
         if(weather.xml_api_reply.weather
@@ -251,12 +257,10 @@
           $(".place").html(weather.xml_api_reply.weather.forecast_information.city.data);
 
           if(weather.xml_api_reply.weather.forecast_information.unit_system.data === "SI") {
-            current_unit = "C";
+            var current_unit = "C";
           } else  {
-            current_unit = "F";
+            var current_unit = "F";
           }
-        } else {
-          console.log("Weather Widget Issue: " + 2);
         }
 
         if(weather.xml_api_reply.weather
@@ -270,15 +274,11 @@
           } else {
             $(".now").html(weather.xml_api_reply.weather.current_conditions.temp_f.data);
           }
-        } else {
-          console.log("Weather Widget Issue: " + 3);
         }
 
         if(weather.xml_api_reply.weather.current_conditions
         && weather.xml_api_reply.weather.current_conditions.condition.data) {
           $(".conditions-0").html(weather.xml_api_reply.weather.current_conditions.condition.data);
-        } else {
-          console.log("Weather Widget Issue: " + 4);
         }
 
         if(weather.xml_api_reply.weather
@@ -295,8 +295,6 @@
 
           $(".high-1").html( convert(weather.xml_api_reply.weather.forecast_conditions[0].high.data, current_unit, unit) );
           $(".low-1").html( convert(weather.xml_api_reply.weather.forecast_conditions[0].low.data, current_unit, unit) );
-        } else {
-          console.log("Weather Widget Issue: " + 5);
         }
 
         if(weather.xml_api_reply.weather
@@ -313,8 +311,6 @@
 
           $(".high-2").html( convert(weather.xml_api_reply.weather.forecast_conditions[1].high.data, current_unit, unit) );
           $(".low-2").html( convert(weather.xml_api_reply.weather.forecast_conditions[1].low.data, current_unit, unit) );
-        } else {
-          console.log("Weather Widget Issue: " + 6);
         }
 
         if(weather.xml_api_reply.weather
@@ -331,8 +327,6 @@
 
           $(".high-3").html( convert(weather.xml_api_reply.weather.forecast_conditions[2].high.data, current_unit, unit) );
           $(".low-3").html( convert(weather.xml_api_reply.weather.forecast_conditions[2].low.data, current_unit, unit) );
-        } else {
-          console.log("Weather Widget Issue: " + 7);
         }
 
         if(weather.xml_api_reply.weather
@@ -349,8 +343,6 @@
 
           $(".high-4").html( convert(weather.xml_api_reply.weather.forecast_conditions[3].high.data, current_unit, unit) );
           $(".low-4").html( convert(weather.xml_api_reply.weather.forecast_conditions[3].low.data, current_unit, unit) );
-        } else {
-          console.log("Weather Widget Issue: " + 8);
         }
       };
 
@@ -376,18 +368,27 @@
             "width" : ""
           })
         }
-
       }
 
       $(document).ready(function($) {
+
+        // Handles when the widget is resized
         restyle();
         $(window).bind("resize", function() {
           restyle();
         });
 
+        // Being able to drag images just feels so tacky
         $('img').live('dragstart', function(event) { event.preventDefault(); });
-        setInterval(reset, 2.5*60*1000);
+
+        // Initial setup of the widget
         reset();
+
+        // When anything in localStorage changes
+        $(window).bind('storage', function (e) {
+          reset();
+          restyle();
+        });
       });
     </script>
   </head>

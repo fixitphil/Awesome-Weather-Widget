@@ -41,7 +41,10 @@ function update() {
   var xml = new JKL.ParseXML( url );
   var data = xml.parse();
 
-  localStorage.setItem("weather", JSON.stringify( data ));
+  if ( data.xml_api_reply
+    && typeof(data.xml_api_reply) === "object" ) {
+    localStorage.setItem("weather", JSON.stringify( data ));
+  }
 }
 
 setInterval(update, 15*60*1000);
