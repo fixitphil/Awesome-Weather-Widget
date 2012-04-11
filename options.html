@@ -249,6 +249,11 @@
       window.location = "chrome-extension://mgmiemnjjchgkmgbeljfocdjjnpjnmcg/ntp.html";
     }
 
+    $("form").submit(function(e) {
+      save();
+      e.preventDefault();
+    });
+
     </script>
   </body>
 </html>
