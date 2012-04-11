@@ -254,7 +254,18 @@
         && weather.xml_api_reply.weather.forecast_information
         && weather.xml_api_reply.weather.forecast_information.city.data
         && weather.xml_api_reply.weather.forecast_information.unit_system.data) {
-          $(".place").html(weather.xml_api_reply.weather.forecast_information.city.data);
+          var full_place = weather.xml_api_reply.weather.forecast_information.city.data;
+          var short_place = full_place.match(/(.*?),/);
+          if ( typeof(short_place) !== "undefined"
+            && typeof(short_place[1]) === "string"
+            && short_place[1] !== "" ) {
+            short_place = short_place[1];
+          } else {
+            short_place = full_place;
+          }
+
+          $(".place").html( short_place )
+            .attr("title", full_place);
 
           if(weather.xml_api_reply.weather.forecast_information.unit_system.data === "SI") {
             var current_unit = "C";
