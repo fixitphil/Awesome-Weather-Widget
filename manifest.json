@@ -1,7 +1,7 @@
 {
   "update_url": "http://clients2.google.com/service/update2/crx",
   "background_page": "background.html",
-  "version": "2012.104.105.100",
+  "version": "2012.104.111.100",
   "name": "Awesome Weather Widget [ANTP]",
   "description": "Awesome weather widget for Awesome New Tab Page with multiple themes. [ANTP]",
   "options_page": "options.html",
