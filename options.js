@@ -10,6 +10,7 @@ function save() {
   instance.unit = $("#unit").val();
   instance.hl = $("#hl").val();
   instance.style = $("#style").val();
+  instance.config = $("#config").val();
 
   instance.last_update = Math.round(new Date().getTime()/1000.0)-(30*60);
 
@@ -33,6 +34,7 @@ function reset() {
   $("#unit").val( instance.unit || "F" );
   $("#hl").val( instance.unit || "en" );
   $("#style").val( instance.style || "A" );
+  $("#config").val( instance.style || "show" );
 
   $("#guid").text( get_guid() );
 

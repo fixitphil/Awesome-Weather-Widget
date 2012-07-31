@@ -76,6 +76,12 @@ function reset() {
     $("html").removeClass("non-android");
   }
 
+  if(config === "hide") {
+    $(".config").hide();
+  } else {
+    $(".config").show();
+  }
+
   if(unit === "C") {
     unit = "C";
   } else {
