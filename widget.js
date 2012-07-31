@@ -65,7 +65,8 @@ function reset() {
   var
     place = instance.place || "San Francisco, CA",
     unit = instance.unit || "F",
-    style = instance.style || "A";
+    style = instance.style || "A",
+    config = instance.config || "show";
 
 
   // Duplicity for the style to apply quickly & be live
@@ -236,4 +237,6 @@ $(document).ready(function($) {
       restyle();
     }
   });
+
+  $(".config").attr("href", "options.html" + window.location.hash);
 });
