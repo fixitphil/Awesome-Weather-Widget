@@ -2,20 +2,10 @@
 <html>
   <head>
     <script type="text/javascript" src="jquery.js"></script>
-    <script type="text/javascript">
-      // Duplicity for the style to apply quickly & be live
-      var style = localStorage.getItem("style") || "A";
-      if(style === "M") {
-        $("html").addClass("non-android");
-      }
-    </script>
-  <!--
-     - For https://chrome.google.com/webstore/detail/mgmiemnjjchgkmgbeljfocdjjnpjnmcg
-     -->
-    <link
-      href='http://fonts.googleapis.com/css?family=Droid+Sans&subset=latin'
-      rel='stylesheet' type='text/css'>
-
+    <script type="text/javascript" src="widget.js"></script>
+    <!--
+       - For https://chrome.google.com/webstore/detail/mgmiemnjjchgkmgbeljfocdjjnpjnmcg
+       -->
     <style>
       body {
         user-select: none;
@@ -24,26 +14,26 @@
       }
 
       html, body {
-        height:100%;
-        overflow:hidden;
-        margin:0;
-        padding:0;
-        font-family:"Droid Sans", Arial;
-        font-size:.9em;
+        height: 100%;
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+        font-family: "Segoe UI", "Droid Sans", Arial, sans-serif;
+        font-size: .9em;
       }
 
       html, body {
-        display:-webkit-box;
-        -webkit-box-orient:vertical;
-        -webkit-box-pack:center;
-        -webkit-box-align:center;
-        width:100%;
-        height:100%;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-box-pack: center;
+        -webkit-box-align: center;
+        width: 100%;
+        height: 100%;
       }
 
       .box-left {
         text-align: center;
-        margin:0 10px;
+        margin: 0 10px;
         width: 77px;
       }
 
@@ -52,23 +42,23 @@
         margin: 0 7px;
         margin-top: 4px;
         -webkit-box-orient: vertical;
-        -webkit-box-align:center;
+        -webkit-box-align: center;
       }
 
       .widgets {
-        display:-webkit-box;
-        -webkit-box-orient:horizontal;
-        -webkit-box-pack:center;
-        -webkit-box-align:center;
+        display: -webkit-box;
+        -webkit-box-orient: horizontal;
+        -webkit-box-pack: center;
+        -webkit-box-align: center;
       }
 
       .widgets {
-        -webkit-box-flex:1;
+        -webkit-box-flex: 1;
       }
 
       h1 {
-        font-size:5em;
-        letter-spacing:-2px;
+        font-size: 5em;
+        letter-spacing: -2px;
         margin: 0;
       }
 
@@ -80,12 +70,12 @@
         -webkit-box-orient: horizontal;
         -webkit-box-pack: left;
         -webkit-box-align: center;
-        background-color:#333;
-        color:#fff;
+        background-color: #333;
+        color: #fff;
         background: -webkit-gradient(radial, center top, 0, center center, 300, from(#555), to(#111));
-        -webkit-border-radius:10px;
+        -webkit-border-radius: 10px;
         -webkit-box-shadow: 0px 7px 7px -5px #111;
-        border-bottom:1px inset #444;
+        border-bottom: 1px inset #444;
 
         -webkit-animation-name: fall;
         -webkit-animation-duration: 0.5s;
@@ -101,13 +91,13 @@
       }
 
       .weather-widget .weather-info div {
-        font-size:0.9em;
-        color:#999
+        font-size: 0.9em;
+        color: #999
       }
 
       .weather-widget .weather-info div:nth-child(2) {
-        font-size:1em !important;
-        color:#fff;
+        font-size: 1em !important;
+        color: #fff;
       }
 
       .weather-widget .weather-info div:nth-child(1) {
@@ -115,21 +105,19 @@
       }
 
       .weather-widget * {
-        text-shadow:0px 1px 0px #000;
+        text-shadow: 0px 1px 0px #000;
       }
-      .cond, .hi, .lo, .day {
+      .cond, .hi, .lo, .day, .conditions-0 {
         text-align: center;
         color: #999;
         font-size: 0.9em;
 
         word-wrap: break-word;
+
+        line-height: 15px;
       }
       .cond {
         height: 42px;
-      }
-      .conditions-0 {
-        color: #999;
-        font-size: 0.9em;
       }
       .hi, .day, .config {
         color: #fff;
@@ -140,7 +128,7 @@
         text-decoration: none;
         opacity: .20;
         text-align: center;
-        display:block;
+        display: block;
       }
       .lo {
         color: #999;
@@ -205,203 +193,6 @@
         left: 0; right: 0;
       }
     </style>
-    <script type="text/javascript">
-
-      function convert(n,h,w) {
-        if(h === "C") {
-          if(w === "F") {
-            return Math.round( n * 9 / 5 + 32 );
-          } else {
-            return Math.round(n);
-          }
-        } else if(h === "F") {
-          if (w === "C") {
-            return Math.round( ( n - 32 ) * 5 / 9 );
-          } else {
-            return Math.round(n);
-          }
-        } else {
-          return Math.round(n);
-        }
-      }
-
-      var google = "https://www.google.com";
-
-      function reset() {
-        var weather = JSON.parse(localStorage.getItem("weather"));
-        var place = localStorage.getItem("place") || "San Francisco, CA";
-        var unit = localStorage.getItem("unit") || "F";
-
-        // Duplicity for the style to apply quickly & be live
-        style = localStorage.getItem("style") || "A";
-        if(style === "M") {
-          $("html").addClass("non-android");
-        } else {
-          $("html").removeClass("non-android");
-        }
-
-        if(unit === "C") {
-          unit = "C";
-        } else {
-          unit = "F";
-        }
-
-        if(!weather.xml_api_reply) {
-          console.error("No weather data.");
-        }
-
-        if(weather.xml_api_reply.weather
-        && weather.xml_api_reply.weather.forecast_information
-        && weather.xml_api_reply.weather.forecast_information.city.data
-        && weather.xml_api_reply.weather.forecast_information.unit_system.data) {
-          var full_place = weather.xml_api_reply.weather.forecast_information.city.data;
-          var short_place = full_place.match(/(.*?),/);
-          if ( typeof(short_place) !== "undefined"
-            && typeof(short_place[1]) === "string"
-            && short_place[1] !== "" ) {
-            short_place = short_place[1];
-          } else {
-            short_place = full_place;
-          }
-
-          $(".place").html( short_place )
-            .attr("title", full_place);
-
-          if(weather.xml_api_reply.weather.forecast_information.unit_system.data === "SI") {
-            var current_unit = "C";
-          } else  {
-            var current_unit = "F";
-          }
-        }
-
-        if(weather.xml_api_reply.weather
-        && weather.xml_api_reply.weather.current_conditions
-        && weather.xml_api_reply.weather.current_conditions.temp_c.data
-        && weather.xml_api_reply.weather.current_conditions.temp_f.data) {
-          $(".conditions-0").html(weather.xml_api_reply.weather.current_conditions.condition.data);
-          // $(".img-0").attr("src", google + weather.xml_api_reply.weather.current_conditions.icon.data);
-          if(unit === "C") {
-            $(".now").html(weather.xml_api_reply.weather.current_conditions.temp_c.data);
-          } else {
-            $(".now").html(weather.xml_api_reply.weather.current_conditions.temp_f.data);
-          }
-        }
-
-        if(weather.xml_api_reply.weather.current_conditions
-        && weather.xml_api_reply.weather.current_conditions.condition.data) {
-          $(".conditions-0").html(weather.xml_api_reply.weather.current_conditions.condition.data);
-        }
-
-        if(weather.xml_api_reply.weather
-        && weather.xml_api_reply.weather.forecast_conditions
-        && weather.xml_api_reply.weather.forecast_conditions[0]
-        && weather.xml_api_reply.weather.forecast_conditions[0].condition.data
-        && weather.xml_api_reply.weather.forecast_conditions[0].icon.data
-        && weather.xml_api_reply.weather.forecast_conditions[0].high.data
-        && weather.xml_api_reply.weather.forecast_conditions[0].low.data
-        && weather.xml_api_reply.weather.forecast_conditions[0].day_of_week.data) {
-          $(".img-1").attr("src", google + weather.xml_api_reply.weather.forecast_conditions[0].icon.data)
-          $(".conditions-1").html(weather.xml_api_reply.weather.forecast_conditions[0].condition.data);
-          $(".day-1").html(weather.xml_api_reply.weather.forecast_conditions[0].day_of_week.data);
-
-          $(".high-1").html( convert(weather.xml_api_reply.weather.forecast_conditions[0].high.data, current_unit, unit) );
-          $(".low-1").html( convert(weather.xml_api_reply.weather.forecast_conditions[0].low.data, current_unit, unit) );
-        }
-
-        if(weather.xml_api_reply.weather
-        && weather.xml_api_reply.weather.forecast_conditions
-        && weather.xml_api_reply.weather.forecast_conditions[1]
-        && weather.xml_api_reply.weather.forecast_conditions[1].condition.data
-        && weather.xml_api_reply.weather.forecast_conditions[1].icon.data
-        && weather.xml_api_reply.weather.forecast_conditions[1].high.data
-        && weather.xml_api_reply.weather.forecast_conditions[1].low.data
-        && weather.xml_api_reply.weather.forecast_conditions[1].day_of_week.data) {
-          $(".img-2").attr("src", google + weather.xml_api_reply.weather.forecast_conditions[1].icon.data)
-          $(".conditions-2").html(weather.xml_api_reply.weather.forecast_conditions[1].condition.data);
-          $(".day-2").html(weather.xml_api_reply.weather.forecast_conditions[1].day_of_week.data);
-
-          $(".high-2").html( convert(weather.xml_api_reply.weather.forecast_conditions[1].high.data, current_unit, unit) );
-          $(".low-2").html( convert(weather.xml_api_reply.weather.forecast_conditions[1].low.data, current_unit, unit) );
-        }
-
-        if(weather.xml_api_reply.weather
-        && weather.xml_api_reply.weather.forecast_conditions
-        && weather.xml_api_reply.weather.forecast_conditions[2]
-        && weather.xml_api_reply.weather.forecast_conditions[2].condition.data
-        && weather.xml_api_reply.weather.forecast_conditions[2].icon.data
-        && weather.xml_api_reply.weather.forecast_conditions[2].high.data
-        && weather.xml_api_reply.weather.forecast_conditions[2].low.data
-        && weather.xml_api_reply.weather.forecast_conditions[2].day_of_week.data) {
-          $(".img-3").attr("src", google + weather.xml_api_reply.weather.forecast_conditions[2].icon.data)
-          $(".conditions-3").html(weather.xml_api_reply.weather.forecast_conditions[2].condition.data);
-          $(".day-3").html(weather.xml_api_reply.weather.forecast_conditions[2].day_of_week.data);
-
-          $(".high-3").html( convert(weather.xml_api_reply.weather.forecast_conditions[2].high.data, current_unit, unit) );
-          $(".low-3").html( convert(weather.xml_api_reply.weather.forecast_conditions[2].low.data, current_unit, unit) );
-        }
-
-        if(weather.xml_api_reply.weather
-        && weather.xml_api_reply.weather.forecast_conditions
-        && weather.xml_api_reply.weather.forecast_conditions[3]
-        && weather.xml_api_reply.weather.forecast_conditions[3].condition.data
-        && weather.xml_api_reply.weather.forecast_conditions[3].icon.data
-        && weather.xml_api_reply.weather.forecast_conditions[3].high.data
-        && weather.xml_api_reply.weather.forecast_conditions[3].low.data
-        && weather.xml_api_reply.weather.forecast_conditions[3].day_of_week.data) {
-          $(".img-4").attr("src", google + weather.xml_api_reply.weather.forecast_conditions[3].icon.data)
-          $(".conditions-4").html(weather.xml_api_reply.weather.forecast_conditions[3].condition.data);
-          $(".day-4").html(weather.xml_api_reply.weather.forecast_conditions[3].day_of_week.data);
-
-          $(".high-4").html( convert(weather.xml_api_reply.weather.forecast_conditions[3].high.data, current_unit, unit) );
-          $(".low-4").html( convert(weather.xml_api_reply.weather.forecast_conditions[3].low.data, current_unit, unit) );
-        }
-      };
-
-
-      function restyle() {
-        var width  = $(window).width() ,
-            height = $(window).height();
-
-        if ( width < 406 ) {
-          $(".sub").css("display", "none");
-          $(".main").css({
-            "margin-left": (185 - 77) / 2
-          });
-          $(".weather-widget").css({
-            "height": "185px",
-            "width" : "185px"
-          })
-        } else if ( width >= 406 ) {
-          $(".sub").css("display", "block");
-          $(".main").css("margin-left", "");
-          $(".weather-widget").css({
-            "height": "",
-            "width" : ""
-          })
-        }
-      }
-
-      $(document).ready(function($) {
-
-        // Handles when the widget is resized
-        restyle();
-        $(window).bind("resize", function() {
-          restyle();
-        });
-
-        // Being able to drag images just feels so tacky
-        $('img').live('dragstart', function(event) { event.preventDefault(); });
-
-        // Initial setup of the widget
-        reset();
-
-        // When anything in localStorage changes
-        $(window).bind('storage', function (e) {
-          reset();
-          restyle();
-        });
-      });
-    </script>
   </head>
 
   <body>
