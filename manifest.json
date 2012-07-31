@@ -1,7 +1,13 @@
 {
   "update_url": "http://clients2.google.com/service/update2/crx",
-  "background_page": "background.html",
-  "version": "2012.104.111.101",
+  "background": {
+    "scripts": [
+      "jquery.js",
+      "xml2array.js",
+      "background.js"
+    ]
+  },
+  "version": "2012.129.1.60",
   "name": "Awesome Weather Widget [ANTP]",
   "description": "Awesome weather widget for Awesome New Tab Page with multiple themes. [ANTP]",
   "options_page": "options.html",
@@ -9,5 +15,11 @@
     "256": "i256.png",
     "128": "i128.png"
   },
-  "permissions": [ "https://www.google.com/" ]
+  "permissions": [ "https://www.google.com/" ],
+  "manifest_version": 2,
+  "content_security_policy": "script-src 'self' https://apis.google.com https://ssl.google-analytics.com https://api.flattr.com; object-src 'self'",
+  "web_accessible_resources": [
+    "widget.html",
+    "options.html"
+  ]
 }

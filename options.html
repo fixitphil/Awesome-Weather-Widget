@@ -4,6 +4,8 @@
     <title>Options - Weather</title>
     <script type="text/javascript" src="jquery.js"></script>
     <script type="text/javascript" src="jquery.jgrowl.js"></script>
+    <script type="text/javascript" src="date.format.js"></script>
+    <script type="text/javascript" src="options.js"></script>
     <link href="jquery.jgrowl.css" media="screen" rel="stylesheet" type="text/css" />
     <style type="text/css">
       #buttons {
@@ -81,6 +83,13 @@
 
   <body>
     <form class="form">
+      <p class="widget">
+        <label>ID:</label> <span id="guid"></span>
+      </p>
+      <p class="widget">
+        <label>Last Accessed:</label> <span id="last_accessed"></span> <label>Date/Time this widget instance was last loaded</label>
+      </p>
+
       <p class="place">
         <input type="text" name="place" id="place" placeholder="San Francisco, CA" />
         <label for="place">Location</label>
@@ -189,9 +198,9 @@
       </p>
 
       <p class="hl">
-        <input type="button" onclick="reset()" value="Reset">
-        <input id="as" type="button" onclick="save()" value="Apply &amp; Save">
-        <input id="antp" type="button" onclick="go2antp()" value="Back to ANTP">
+        <input id="reset" type="button" value="Reset">
+        <input id="as" type="button" value="Apply &amp; Save">
+        <input id="antp" type="button" value="Back to ANTP">
       </p>
 
     </form>
@@ -209,51 +218,5 @@
       +1 This Widget
       <g:plusone size="tall" href="https://chrome.google.com/webstore/detail/goeepbfnllchoihkoiecpkkekbpfiboc"></g:plusone>
     </div>
-
-    <script>
-    (function() {
-      var s = document.createElement('script'), t = document.getElementsByTagName('script')[0];
-      s.type = 'text/javascript';
-      s.async = true;
-      s.src = 'https://api.flattr.com/js/0.6/load.js?mode=auto';
-      t.parentNode.insertBefore(s, t);
-    })();
-
-    (function() {
-      var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-      po.src = 'https://apis.google.com/js/plusone.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-    })();
-
-    var bp = chrome.extension.getBackgroundPage();
-
-    function reset() {
-      $("#place").val( localStorage.place || "San Francisco, CA" );
-      $("#unit").val(localStorage.unit);
-      $("#hl").val(localStorage.unit);
-      $("#style").val(localStorage.style);
-    }
-    reset();
-    function save() {
-      localStorage.place = $("#place").val();
-      localStorage.unit = $("#unit").val();
-      localStorage.hl = $("#hl").val();
-      localStorage.style = $("#style").val();
-
-      bp.update();
-
-      $.jGrowl("You're awesome.", {header: "Saved!!1!", position: "top-right"});
-    }
-
-    function go2antp() {
-      window.location = "chrome-extension://mgmiemnjjchgkmgbeljfocdjjnpjnmcg/ntp.html";
-    }
-
-    $("form").submit(function(e) {
-      save();
-      e.preventDefault();
-    });
-
-    </script>
   </body>
 </html>
