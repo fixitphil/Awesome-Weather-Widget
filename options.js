@@ -37,7 +37,7 @@ function reset() {
   $("#guid").text( get_guid() );
 
   if ( instance.last_accessed ) {
-    $("#last_accessed").text( dateFormat(instance.last_accessed*1000, "mmmm dS, yyyy, h:MM TT") + " ["+instance.last_accessed+"]" );
+    $("#last_accessed").text( dateFormat(instance.last_accessed*1000, "mmmm dS, yyyy, h:MM TT") );
   }
 
 }
