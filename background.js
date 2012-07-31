@@ -72,9 +72,7 @@ function update() {
       place = instance.place || "San Francisco, CA",
       hl = instance.hl || "en";
 
-    if ( instance.last_accessed && parseInt(instance.last_accessed) ) {
-      instance.last_accessed = instance.last_accessed;
-    } else {
+    if ( !instance.last_accessed ) {
       instance.last_accessed = Math.round(new Date().getTime()/1000.0);
     }
 
